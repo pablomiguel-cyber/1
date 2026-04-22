@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Localiza Aí</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #6584ac;
+            color: white;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px;
+            background: #729ff1;
+        }
+
+        .logo {
+            width: 200px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .filtros {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .filtros button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .locais {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .card {
+            background: #5f83ac;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #5682b4;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <img src="https://media.discordapp.net/attachments/1473779817714548930/1495869554516295860/image-removebg-preview_9.png?ex=69e7d095&is=69e67f15&hm=d53b5b3c9c46173a26191fd92f9ee08f1c1a4dab0c118f94b24eac490ea23b13&=&format=webp&quality=lossless" class="logo">
+        <h1>Localiza Aí</h1>
+        <p>Te ajudando no futuro das nossas cidades</p>
+    </header>
+
+    <div class="container">
+
+        <!-- LOCALIZAÇÃO -->
+        <div class="filtros">
+            <button onclick="pegarLocalizacao()">📍 Usar minha localização</button>
+        </div>
+
+        <!-- FILTROS -->
+        <div class="filtros">
+            <button onclick="definirBusca('farmacia')">Farmácias</button>
+            <button onclick="definirBusca('mercado')">Mercados</button>
+            <button onclick="definirBusca('posto de gasolina')">Postos</button>
+            <button onclick="definirBusca('hospital')">Hospitais</button>
+            <button onclick="definirBusca('escola')">Escolas</button>
+            <button onclick="definirBusca('shopping')">Shopping</button>
+            <button onclick="definirBusca('restaurante')">Restaurantes</button>
+        </div>
+
+        <!-- CARDS -->
+        <div class="locais">
+            <div class="card">
+                <h3>Nome do Local</h3>
+                <p>Endereço aqui</p>
+                <button>Ver no mapa</button>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 - Localiza Aí</p>
+    </footer>
+
+    <script>
+        let tipoBusca = "farmacia";
+
+        function definirBusca(tipo) {
+            tipoBusca = tipo;
+        }
+
+        function pegarLocalizacao() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(posicao) {
+
+                    let lat = posicao.coords.latitude;
+                    let lon = posicao.coords.longitude;
+
+                    // Abre o Google Maps com busca REAL funcionando
+                    let url = `https://www.google.com/maps/search/${tipoBusca}/@${lat},${lon},15z`;
+                    window.open(url, "_blank");
+
+                }, function() {
+                    alert("Erro ao obter sua localização.");
+                });
+
+            } else {
+                alert("Seu navegador não suporta localização.");
+            }
+        }
+    </script>
+
+</body>
+</html>
